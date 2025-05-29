@@ -1,0 +1,28 @@
+# Terraform state files - DO NOT COMMIT!
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+crash.log
+
+# Terraform sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Local overrides
+override.tf
+override.tf.json
+
+# Providers cache
+.terraform/providers/
+
+# Specific Terraform modules that are downloaded
+.terraform/modules/
+
+# Crash log files
+*.log
+
+# SSH keys and other credentials (if they somehow ended up here)
+*.pem
+*.key
+*.env
