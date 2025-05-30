@@ -11,12 +11,23 @@ terraform {
       version = "~> 3.0"
     }
   }
+
+    backend "s3" {
+    bucket      = "my-app-terraform-state-zentawrus" 
+    key         = "my-app/state/terraform.tfstate"  
+    region      = "eu-north-1"
+    encrypt     = true                                   
+    use_lockfile = true                                  
+   profile     = "terraform"
+  }
+
 }
 
 provider "aws" {
-  region  = var.aws_region
+  region  = "eu-north-1"
   profile = "terraform" 
 }
+
 
 
 resource "aws_vpc" "main" {
