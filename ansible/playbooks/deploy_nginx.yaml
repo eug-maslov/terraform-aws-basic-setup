@@ -1,0 +1,58 @@
+# ~/terraform/roadmap/proj1/ansible/playbooks/deploy_nginx.yaml
+
+- name: Deploy Nginx on Amazon Linux 2
+  hosts: webservers
+  become: true
+  collections:
+    - amazon.aws 
+
+  tasks:
+    - name: Ensure yum cache is up to date
+      ansible.builtin.yum:
+        update_cache: yes
+
+    - name: Enable Nginx from Amazon Linux Extras using native command
+      ansible.builtin.command: amazon-linux-extras enable nginx1
+
+
+    - name: Install Nginx package
+      ansible.builtin.yum:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx service is running and enabled at boot
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy a simple index.html page
+      ansible.builtin.copy:
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Hello from EC2!</title>
+              <style>
+                  body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding-top: 50px; }
+                  h1 { color: #333; }
+                  p { color: #666; }
+              </style>
+          </head>
+          <body>
+              <h1>Hello from your EC2 Instance!</h1>
+              <p>This page was deployed by Ansible on Amazon Linux 2.</p>
+              <p>Current Time: {{ ansible_date_time.iso8601_micro }}</p>
+          </body>
+          </html>
+        dest: /usr/share/nginx/html/index.html
+        mode: '0644'
+
+    - name: Display Nginx service status (for debugging)
+      ansible.builtin.command: systemctl status nginx
+      register: nginx_status_output
+      changed_when: false
+
+    - name: Print Nginx service status
+      ansible.builtin.debug:
+        var: nginx_status_output.stdout_lines
