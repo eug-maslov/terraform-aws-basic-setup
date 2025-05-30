@@ -1,9 +1,11 @@
+# ~/terraform/roadmap/proj1/s3.tf
+
 resource "aws_s3_bucket" "my_project_bucket" {
-  bucket = "${lower(local.project_name)}-zentawrus"
+  bucket = "${lower(var.project_name)}-zentawrus-bucket"
 
   tags = {
-    Name        = "${local.project_name}-data-bucket"
-    Environment = local.environment
+    Name        = "${var.project_name}-data-bucket"
+    Environment = var.environment
     ManagedBy   = "Terraform"
     Purpose     = "General Data Storage"
   }

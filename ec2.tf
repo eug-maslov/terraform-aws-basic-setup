@@ -1,6 +1,5 @@
-# ec2.tf
+# ~/terraform/roadmap/proj1/ec2.tf
 
-# Data source to find the latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
@@ -21,24 +20,21 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
-
 resource "aws_instance" "web_server" {
   ami                         = data.aws_ami.amazon_linux_2.id
-  instance_type               = "t3.micro"                    
-  subnet_id                   = aws_subnet.public_subnet_a.id  
-  vpc_security_group_ids      = [aws_security_group.web_sg.id] 
-  key_name                    = "main server2"                  
-
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.public_subnet_a.id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
+  key_name                    = var.ssh_key_name
 
   associate_public_ip_address = true
 
   tags = {
-    Name        = "${local.project_name}-web-server"
-    Environment = local.environment
+    Name        = "${var.project_name}-web-server"
+    Environment = var.environment
     ManagedBy   = "Terraform"
   }
 }
-
 
 output "web_server_instance_id" {
   value       = aws_instance.web_server.id
