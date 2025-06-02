@@ -1,0 +1,9 @@
+
+# defaults file for roles/nginx_webserver
+
+nginx_extras_package_name: nginx1
+nginx_package_name: nginx
+nginx_service_name: nginx
+nginx_html_directory: /usr/share/nginx/html
+nginx_template_name: index.html.j2 
+nginx_dest_file_name: index.html

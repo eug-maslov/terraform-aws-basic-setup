@@ -1,0 +1,2 @@
+[webservers]
+web_app_server ansible_host=51.20.124.62 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/main_server2.pem

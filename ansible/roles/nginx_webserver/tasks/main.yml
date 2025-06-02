@@ -1,0 +1,27 @@
+
+# tasks file for roles/nginx_webserver
+
+- name: Ensure yum cache is up to date
+  ansible.builtin.yum:
+    update_cache: yes
+
+- name: Enable Nginx from Amazon Linux Extras using native command
+  ansible.builtin.command: "amazon-linux-extras enable {{ nginx_extras_package_name }}"
+
+- name: Install Nginx package
+  ansible.builtin.yum:
+    name: "{{ nginx_package_name }}"
+    state: present
+
+- name: Ensure Nginx service is running and enabled at boot
+  ansible.builtin.service:
+    name: "{{ nginx_service_name }}"
+    state: started
+    enabled: yes
+
+- name: Deploy a simple index.html page
+  ansible.builtin.template: 
+    src: "{{ nginx_template_name }}" 
+    dest: "{{ nginx_html_directory }}/{{ nginx_dest_file_name }}"
+    mode: '0644'
+  notify: Restart Nginx service
