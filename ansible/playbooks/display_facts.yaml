@@ -1,0 +1,31 @@
+# ~/terraform/roadmap/proj1/ansible/playbooks/display_facts.yaml
+
+- name: Display specific facts from webservers
+  hosts: webservers
+  become: false 
+  gather_facts: true 
+
+  tasks:
+    - name: Print the operating system distribution
+      ansible.builtin.debug:
+        msg: "The operating system on {{ inventory_hostname }} is: {{ ansible_distribution }}"
+
+    - name: Print the OS family
+      ansible.builtin.debug:
+        msg: "The OS family on {{ inventory_hostname }} is: {{ ansible_os_family }}"
+
+    - name: Print the default IPv4 address
+      ansible.builtin.debug:
+        msg: "The default IPv4 address on {{ inventory_hostname }} is: {{ ansible_default_ipv4.address }}"
+
+    - name: Print the total memory in MB
+      ansible.builtin.debug:
+        msg: "Total memory on {{ inventory_hostname }} is: {{ ansible_memory_mb.real.total }} MB"
+
+    - name: Print network interfaces
+      ansible.builtin.debug:
+        msg: "Machine interfaces: {{ ansible_interfaces }}"
+
+    - name: Print something
+      ansible.builtin.debug:
+        msg: "Envs: {{ ansible_env }}"
