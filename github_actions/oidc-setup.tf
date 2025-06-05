@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "policy" {
       "ecr:UploadLayerPart",
       "ecr:CompleteLayerUpload"
     ]
-    resources = [aws_ecr_repository.github_repo.arn]
+    resources = ["*"]
   }
 
   statement {
