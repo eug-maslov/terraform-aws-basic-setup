@@ -81,7 +81,8 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         ]
         Resource = [
           aws_codedeploy_app.web_app.arn,
-          aws_codedeploy_deployment_group.web_deployment_group.arn
+          aws_codedeploy_deployment_group.web_deployment_group.arn,
+          "arn:aws:codedeploy:${var.aws_region}:${data.aws_caller_identity.current.account_id}:deploymentconfig:*"
         ]
       },
       {
