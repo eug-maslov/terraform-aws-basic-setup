@@ -1,0 +1,6 @@
+version: 0.0
+os: linux
+
+files:
+  - source: github_actions/index.html
+    destination: /usr/share/nginx/html

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello from CodePipeline!</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        h1 { color: #333; }
+        p { color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Deployment Successful!</h1>
+    <p>This page was deployed automatically by AWS CodePipeline.</p>
+    <p>Current time (deployed): <span id="time"></span></p>
+    <script>
+        document.getElementById('time').innerText = new Date().toLocaleString();
+    </script>
+</body>
+</html>
