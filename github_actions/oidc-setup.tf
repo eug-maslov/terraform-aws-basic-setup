@@ -35,6 +35,7 @@ data "aws_iam_policy_document" "assume_role" {
       variable = "token.actions.githubusercontent.com:sub"
       values   = [
         "repo:eug-maslov/terraform-aws-basic-setup:ref:refs/heads/main",
+        "repo:eug-maslov/terraform-aws-basic-setup:ref:refs/heads/ecr-push",
         "repo:eug-maslov/terraform-aws-basic-setup:ref:refs/tags/v*"
       ]
     }
