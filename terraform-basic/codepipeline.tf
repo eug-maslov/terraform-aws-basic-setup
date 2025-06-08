@@ -131,7 +131,7 @@ resource "aws_codepipeline" "my_ci_cd_pipeline" {
         ConnectionArn    = "arn:aws:codeconnections:eu-north-1:418295696984:connection/8a0060bb-adda-4f00-99d8-c1f85a525aed"
         FullRepositoryId = "eug-maslov/terraform-aws-basic-setup"
         BranchName       = "main"
-        OutputArtifactFormat = "CODEPIPELINE_JSON"
+        OutputArtifactFormat = "CODE_ZIP"
       }
     }
   }
