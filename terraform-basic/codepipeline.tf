@@ -89,7 +89,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         Action = [
           "codestar-connections:UseConnection"
         ]
-        Resource = "arn:aws:codestar-connections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/YOUR_CODESTAR_CONNECTION_ID" # REPLACE with your CodeStar Connection ARN
+        Resource = "arn:aws:codestar-connections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/arn:aws:codeconnections:eu-north-1:418295696984:connection/8a0060bb-adda-4f00-99d8-c1f85a525aed"
       },
       {
         Effect = "Allow"
