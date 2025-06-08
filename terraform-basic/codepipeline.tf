@@ -128,7 +128,7 @@ resource "aws_codepipeline" "my_ci_cd_pipeline" {
       output_artifacts = ["SourceOutput"]
 
       configuration = {
-        ConnectionArn    = "arn:aws:codestar-connections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/bbd7a507-fe2f-4e95-a377-ded5de4f6c36"
+        ConnectionArn    = "arn:aws:codestar-connections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/8a0060bb-adda-4f00-99d8-c1f85a525aed"
         FullRepositoryId = "eug-maslov/terraform-aws-basic-setup"
         BranchName       = "main"
         OutputArtifactFormat = "CODEPIPELINE_JSON"
