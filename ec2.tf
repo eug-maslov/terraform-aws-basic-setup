@@ -28,11 +28,28 @@ resource "aws_instance" "web_server" {
   key_name                    = var.ssh_key_name
 
   associate_public_ip_address = true
+  
+  iam_instance_profile = aws_iam_instance_profile.codedeploy_profile.name
+
+  /* It's better to install codedeploy agent via ansible, but here I wanted to test user data in tf */
+
+  user_data = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y ruby wget
+    cd /home/ec2-user
+    wget https://aws-codedeploy-eu-north-1.s3.eu-north-1.amazonaws.com/latest/install
+    chmod +x ./install
+    ./install auto
+    systemctl start codedeploy-agent
+    systemctl enable codedeploy-agent
+  EOF
 
   tags = {
     Name        = "${var.project_name}-web-server"
     Environment = var.environment
     ManagedBy   = "Terraform"
+    CodeDeploy  = "true"
   }
 }
 
