@@ -34,15 +34,16 @@ resource "aws_instance" "web_server" {
   /* It's better to install codedeploy agent via ansible, but here I wanted to test user data in tf */
 
   user_data = <<-EOF
-    #!/bin/bash
-    yum update -y
-    yum install -y ruby wget
-    cd /home/ec2-user
-    wget https://aws-codedeploy-eu-north-1.s3.eu-north-1.amazonaws.com/latest/install
-    chmod +x ./install
-    ./install auto
-    systemctl start codedeploy-agent
-    systemctl enable codedeploy-agent
+    sudo yum update -y
+    sudo yum install -y ruby wget -y 
+    wget https://aws-codedeploy-eu-north-1.s3.eu-north-1.amazonaws.com/latest/install -O /tmp/install
+
+    chmod +x /tmp/install
+
+    sudo /tmp/install auto
+
+    sudo systemctl start codedeploy-agent
+    sudo systemctl enable codedeploy-agent
   EOF
 
   tags = {
