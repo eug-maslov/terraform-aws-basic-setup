@@ -44,6 +44,10 @@ resource "aws_instance" "web_server" {
 
     sudo systemctl start codedeploy-agent
     sudo systemctl enable codedeploy-agent
+
+    sudo amazon-linux-extras install nginx1 -y
+    sudo systemctl start nginx
+    sudo systemctl enable nginx
   EOF
 
   tags = {
