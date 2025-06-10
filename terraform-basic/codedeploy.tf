@@ -13,7 +13,7 @@ resource "aws_iam_role" "codedeploy_role" {
     }]
   })
 }
-
+/* test */
 
 resource "aws_iam_policy_attachment" "codedeploy_role_attach" {
   name       = "attach-codedeploy-managed-policy"
