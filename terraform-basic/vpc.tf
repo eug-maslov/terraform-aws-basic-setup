@@ -28,6 +28,11 @@ provider "aws" {
   profile = "terraform" 
 }
 
+data "aws_prefix_list" "s3"            { name = "com.amazonaws.${var.aws_region}.s3" }
+data "aws_prefix_list" "ssm"           { name = "com.amazonaws.${var.aws_region}.ssm" }
+data "aws_prefix_list" "ssmmessages"   { name = "com.amazonaws.${var.aws_region}.ssmmessages" }
+data "aws_prefix_list" "ec2messages"   { name = "com.amazonaws.${var.aws_region}.ec2messages" }
+data "aws_prefix_list" "logs"          { name = "com.amazonaws.${var.aws_region}.logs" }
 
 
 resource "aws_vpc" "main" {
@@ -136,12 +141,21 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+   egress {
+    from_port         = 443
+    to_port           = 443
+    protocol          = "tcp"
+    prefix_list_ids   = [
+      data.aws_prefix_list.s3.id,
+      data.aws_prefix_list.ssm.id,
+      data.aws_prefix_list.ssmmessages.id,
+      data.aws_prefix_list.ec2messages.id,
+      data.aws_prefix_list.logs.id
+    ]
   }
+
+
+
 
   tags = {
     Name        = "${var.project_name}-web-sg"
