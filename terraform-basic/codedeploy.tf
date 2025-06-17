@@ -1,4 +1,3 @@
-
 resource "aws_iam_role" "codedeploy_role" {
   name = "codedeploy-role"
 
@@ -13,14 +12,12 @@ resource "aws_iam_role" "codedeploy_role" {
     }]
   })
 }
-/* test */
 
 resource "aws_iam_policy_attachment" "codedeploy_role_attach" {
   name       = "attach-codedeploy-managed-policy"
   roles      = [aws_iam_role.codedeploy_role.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
 }
-
 
 resource "aws_iam_role_policy" "codedeploy_ec2_s3_access" {
   name = "codedeploy-ec2-s3-artifact-access"
@@ -34,10 +31,9 @@ resource "aws_iam_role_policy" "codedeploy_ec2_s3_access" {
         Action = [
           "s3:GetObject",
           "s3:GetObjectVersion",
-          "s3:ListBucket" 
+          "s3:ListBucket"
         ]
         Resource = [
-          
           aws_s3_bucket.codepipeline_artifacts_bucket.arn,
           "${aws_s3_bucket.codepipeline_artifacts_bucket.arn}/*"
         ]
@@ -46,24 +42,39 @@ resource "aws_iam_role_policy" "codedeploy_ec2_s3_access" {
         Effect = "Allow"
         Action = "s3:GetBucketLocation"
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameters",
+          "ssm:GetParameter",
+          "ssm:DescribeParameters"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "*"
       }
     ]
   })
 }
 
-# IAM Instance Profile for the EC2 instance
 resource "aws_iam_instance_profile" "codedeploy_profile" {
   name = "codedeploy-instance-profile"
   role = aws_iam_role.codedeploy_role.name
 }
 
-# CodeDeploy Application definition
 resource "aws_codedeploy_app" "web_app" {
   name             = "${var.project_name}-codedeploy-app"
   compute_platform = "Server"
 }
 
-# CodeDeploy Deployment Group definition
 resource "aws_codedeploy_deployment_group" "web_deployment_group" {
   app_name              = aws_codedeploy_app.web_app.name
   deployment_group_name = "${var.project_name}-deployment-group"
@@ -89,7 +100,6 @@ resource "aws_codedeploy_deployment_group" "web_deployment_group" {
 
   deployment_config_name = "CodeDeployDefault.AllAtOnce"
 }
-
 
 resource "aws_iam_role" "codedeploy_service_role" {
   name = "${var.project_name}-codedeploy-service-role"
