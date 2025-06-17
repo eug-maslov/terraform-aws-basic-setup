@@ -207,9 +207,9 @@ resource "aws_codebuild_project" "basic_build" {
             - echo "Zipping the deployment bundle..."
      
             - zip -r deployment_bundle.zip index.html appspec.yml scripts/
-        artifacts:
-          files:
-            - deployment_bundle.zip
+      artifacts:
+        files:
+          - deployment_bundle.zip
     EOF
   }
 
