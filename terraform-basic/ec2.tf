@@ -39,6 +39,8 @@ resource "aws_instance" "web_server" {
   }
 }
 
+
+
 data "cloudinit_config" "user_data_config" {
   gzip          = true
   base64_encode = true

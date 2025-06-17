@@ -200,17 +200,16 @@ resource "aws_codebuild_project" "basic_build" {
         build:
           commands:
             - echo "Preparing build deployment bundle..."
-            - mkdir deploy_bundle
-            - cp codepipeline/index.html deploy_bundle/index.html
-            - cp codepipeline/appspec.yml deploy_bundle/appspec.yml
-            - cp -r codepipeline/scripts deploy_bundle/scripts
+           
+            - cp codepipeline/index.html . 
+            - cp codepipeline/appspec.yml . 
+            - cp -r codepipeline/scripts . 
             - echo "Zipping the deployment bundle..."
-            - cd deploy_bundle
-            - zip -r ../deployment_bundle.zip .
-            - cd ..
-      artifacts:
-        files:
-          - deployment_bundle.zip
+     
+            - zip -r deployment_bundle.zip index.html appspec.yml scripts/
+        artifacts:
+          files:
+            - deployment_bundle.zip
     EOF
   }
 
