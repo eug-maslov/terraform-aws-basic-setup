@@ -4,3 +4,4 @@ os: linux
 files:
   - source: index.html
     destination: /usr/share/nginx/html
+    overwrite: true
