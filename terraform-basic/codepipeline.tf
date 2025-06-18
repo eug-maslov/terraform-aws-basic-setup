@@ -200,13 +200,16 @@ resource "aws_codebuild_project" "basic_build" {
         build:
           commands:
             - echo "Preparing build deployment bundle..."
-            - cd codepipeline 
+            - cp codepipeline/index.html .
+            - cp codepipeline/appspec.yml . 
+            - cp -r codepipeline/scripts . 
             - echo "Zipping the deployment bundle..."
-           
-            - zip -r ../deployment_bundle.zip . # Zip current directory '.' into ../deployment_bundle.zip
+            - zip -r deployment_bundle.zip . 
+                                      
       artifacts:
         files:
-          - deployment_bundle.zip
+          - deployment_bundle.zip 
+        discard-paths: yes 
     EOF
   }
 
