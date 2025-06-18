@@ -199,21 +199,21 @@ version: 0.2
 phases:
   build:
     commands:
-      - echo "Preparing deployment bundle with scripts..."
- 
+      - echo "--- Copying files to CodeBuild working directory ---"
       - cp codepipeline/index.html .
       - cp codepipeline/appspec.yml .
-      - cp -r codepipeline/scripts . 
-      - echo "Listing contents before zipping:"
+      
+      - rsync -av --exclude '.*' codepipeline/scripts/ ./scripts/ 
+      - echo "--- Contents of CodeBuild working directory AFTER copy ---"
       - ls -la
+      - echo "--- Contents of the 'scripts' directory in working directory ---"
       - ls -la scripts/ 
-      - echo "Zipping the complete deployment bundle..."
-
-      - zip -r deployment_bundle.zip .
 artifacts:
+  discard-paths: yes
   files:
-    - deployment_bundle.zip 
-  discard-paths: yes        
+    - index.html
+    - appspec.yml
+    - scripts/**/* 
     EOF
   }
 
