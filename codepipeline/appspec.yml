@@ -9,11 +9,11 @@ file_exists_behavior: OVERWRITE
 
 hooks:
   ApplicationStop: 
-    - location: scripts/stop_nginx.sh
+    - location: stop_nginx.sh
       timeout: 20 
       runas: root 
 
   ApplicationStart: 
-    - location: scripts/start_nginx.sh
+    - location: start_nginx.sh
       timeout: 20
       runas: root
