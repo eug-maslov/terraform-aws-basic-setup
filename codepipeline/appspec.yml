@@ -5,6 +5,7 @@ files:
   - source: index.html
     destination: /usr/share/nginx/html
     overwrite: true
+file_exists_behavior: OVERWRITE
 
 hooks:
   ApplicationStop: 
