@@ -202,7 +202,7 @@ phases:
       - cp codepipeline/index.html .
       - cp codepipeline/appspec.yml .
    
-  discard-paths: yes
+artifacts:
   files:
     - index.html
     - appspec.yml
