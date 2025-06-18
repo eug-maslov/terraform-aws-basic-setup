@@ -199,13 +199,21 @@ version: 0.2
 phases:
   build:
     commands:
+      - echo "Preparing deployment bundle with scripts..."
+ 
       - cp codepipeline/index.html .
       - cp codepipeline/appspec.yml .
-   
+      - cp -r codepipeline/scripts . 
+      - echo "Listing contents before zipping:"
+      - ls -la
+      - ls -la scripts/ 
+      - echo "Zipping the complete deployment bundle..."
+
+      - zip -r deployment_bundle.zip .
 artifacts:
   files:
-    - index.html
-    - appspec.yml
+    - deployment_bundle.zip 
+  discard-paths: yes        
     EOF
   }
 
