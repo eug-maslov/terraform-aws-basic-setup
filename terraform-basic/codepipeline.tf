@@ -195,20 +195,20 @@ resource "aws_codebuild_project" "basic_build" {
   source {
     type      = "CODEPIPELINE"
     buildspec = <<-EOF
-      version: 0.2
-      phases:
-        build:
-          commands:
-            - cp codepipeline/index.html .
-            - cp codepipeline/appspec.yml .
-            - cp -r codepipeline/scripts .
-      artifacts:
-        discard-paths: yes
-        files:
-          - index.html
-          - appspec.yml
-          - scripts/**/*
-          EOF
+version: 0.2
+phases:
+  build:
+    commands:
+      - cp codepipeline/index.html .
+      - cp codepipeline/appspec.yml .
+      - cp -r codepipeline/scripts .
+artifacts:
+  discard-paths: yes
+  files:
+    - index.html
+    - appspec.yml
+    - scripts/
+    EOF
   }
 
   tags = {
